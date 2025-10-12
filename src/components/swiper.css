@@ -1,0 +1,41 @@
+.swiper-wrapper {
+    display: flex;
+    max-width: 514px;
+    max-height: 100% !important;
+}
+
+.swiper-slide {
+    flex-shrink: 0; /* чтобы слайд не сжимался */
+    width: auto;
+    display: flex;
+    justify-content: center;
+    overflow: visible !important;
+}
+
+.swiper-pagination-bullet-active {
+    background: #e1566e !important;
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+    color: #e1566e !important;
+}
+
+@media screen and (max-width: 500px) {
+    .swiper-button-next,
+    .swiper-button-prev {
+        display: none !important;
+    }
+}
+
+@media screen and (max-width: 700px) {
+    .mySwiper {
+        display: none !important;
+    }
+}
+
+@media screen and (min-width: 700px) {
+    .swiper-pagination {
+        display: none !important;
+    }
+}
