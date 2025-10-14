@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useMemo, useState} from 'react';
+import React, {useContext, useMemo, useState} from 'react';
 import DashboardItem from "../components/DashboardItem.jsx";
 import plusW from "../assets/plusW.svg";
 import {useNavigate} from "react-router";
@@ -9,7 +9,7 @@ import {AnimatePresence} from "framer-motion";
 
 const Dashboard = () => {
     const navigate = useNavigate();
-    const {items, setItems, loadRecipes, isAdmin, user, isFetching} = useContext(Context);
+    const {items, setItems, isAdmin, user, isFetching} = useContext(Context);
     const [isSubmittingId, setIsSubmittingId] = useState(null);
 
     useDocumentTitle('Dashboard | Recipe Hub');
@@ -18,7 +18,7 @@ const Dashboard = () => {
         setIsSubmittingId(id);
         try {
             const token = localStorage.getItem('token');
-            const res = await fetch(`https://recipehubserver-pi.vercel.app/api/recipes/${id}`, {
+            const res = await fetch(`https://recipehub.online/api/recipes/${id}`, {
                 method: 'DELETE',
                 headers: {'Authorization': `Bearer ${token}`}
             });
@@ -36,10 +36,6 @@ const Dashboard = () => {
             setIsSubmittingId(null);
         }
     };
-
-    useEffect(() => {
-        loadRecipes();
-    }, []);
 
     // подготовка списка для отображения
     const visibleRecipes = useMemo(() => {

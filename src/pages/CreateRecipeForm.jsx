@@ -92,7 +92,7 @@ const CreateRecipeForm = () => {
         setIsSubmitting(true);
 
         try {
-            const res = await fetch('https://recipehubserver-pi.vercel.app/api/recipes', {
+            const res = await fetch('https://recipehub.online/api/recipes', {
                 method: 'POST',
                 headers: {
                     "Content-Type": 'application/json',
@@ -127,7 +127,7 @@ const CreateRecipeForm = () => {
         setIsSubmitting(true);
 
         try {
-            const res = await fetch(`https://recipehubserver-pi.vercel.app/api/recipes/${id}`, {
+            const res = await fetch(`https://recipehub.online/api/recipes/${id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',

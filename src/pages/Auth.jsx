@@ -27,7 +27,7 @@ const Auth = observer(() => {
         setIsSubmitting(true);
 
         try {
-            const url = `https://recipehubserver-pi.vercel.app/api/auth/${isLogin ? 'login' : 'register'}`;
+            const url = `https://recipehub.online/api/auth/${isLogin ? 'login' : 'register'}`;
             const body = isLogin
                 ? { email: form.email, password: form.password }
                 : { name: form.name, email: form.email, password: form.password };

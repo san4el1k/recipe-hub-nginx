@@ -15,7 +15,7 @@ function App() {
 
     const loadRecipes = async () => {
         try {
-            const res = await fetch("https://recipehubserver-pi.vercel.app/api/recipes");
+            const res = await fetch("https://recipehub.online/api/recipes");
             const data = await res.json();
             setItems(data);
         } catch (err) {
