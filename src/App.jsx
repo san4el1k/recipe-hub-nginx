@@ -4,6 +4,7 @@ import NavBar from "./components/NavBar.jsx";
 import {BrowserRouter} from "react-router";
 import {Context} from "./main.jsx";
 import {useEffect, useState} from "react";
+import RecipeStore from "./store/RecipeStore.js";
 
 function App() {
     const [isAuth, setIsAuth] = useState(false)
@@ -22,6 +23,11 @@ function App() {
             });
             const data = await res.json();
             setItems(data);
+            
+            // 👇 Инициализируем лайки из ответа сервера
+            if (token) {
+                RecipeStore.initializeLikes(data);
+            }
         } catch (err) {
             console.error("Ошибка загрузки рецептов:", err);
         } finally {
@@ -42,11 +48,13 @@ function App() {
             setIsAuth(false);
             setUser(null);
             setIsAdmin(false);
+            // 👇 Очищаем лайки при отсутствии токена
+            RecipeStore.clear();
         }
 
         setIsLoading(false);
-        loadRecipes(token); // 👈 передаём токен в загрузчик
-    }, []); // выполняется один раз при монтировании
+        loadRecipes(token);
+    }, []);
 
     // если хочешь автообновление при логине/логауте:
     useEffect(() => {
@@ -62,9 +70,11 @@ function App() {
                 setIsAuth(false);
                 setUser(null);
                 setIsAdmin(false);
+                // 👇 Очищаем лайки при выходе
+                RecipeStore.clear();
             }
 
-            loadRecipes(token); // 👈 перезапрашиваем рецепты при изменении токена
+            loadRecipes(token);
         };
 
         window.addEventListener("storage", onStorageChange);
@@ -77,7 +87,9 @@ function App() {
         setIsAuth(false);
         setIsAdmin(false);
         setUser(null);
-        loadRecipes(null); // 👈 перезапрашиваем рецепты без токена
+        // 👇 Очищаем лайки при выходе
+        RecipeStore.clear();
+        loadRecipes(null);
     };
 
     return (

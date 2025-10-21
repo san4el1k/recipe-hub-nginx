@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {useLocation, useNavigate} from "react-router";
 import arrow from '../assets/left-arrow.svg';
 import clockBig from '../assets/clockBig.svg';
@@ -11,6 +11,8 @@ import CommentSection from "../components/commentSection/CommentSection.jsx";
 import {HandHeart} from "lucide-react";
 import {likeRecipe, unlikeRecipe} from "../utils/likesHelper.js";
 import {Context} from "../main.jsx";
+import RecipeStore from "../store/RecipeStore.js";
+import {observer} from "mobx-react-lite";
 
 // Компонент для отображения информации (время, порции и т.д.)
 const InfoCard = ({ icon, value, label }) => (
@@ -66,9 +68,6 @@ const Recipe = () => {
     const location = useLocation();
     const { props } = location.state || {};
     const [lightbox, setLightbox] = useState(null);
-    const [liked, setLiked] = useState(props.liked);
-    const [likesCount, setLikesCount] = useState(props.likesCount);
-    const token = localStorage.getItem("token");
 
     if (!props) {
         return <p className="text-center mt-10">Recipe not found</p>;
@@ -76,32 +75,21 @@ const Recipe = () => {
 
     useDocumentTitle(`${props.title} | Recipe Hub`);
 
-    // 👇 синхронизация с приходящими пропсами
-    useEffect(() => {
-        setLiked(props.liked);
-        setLikesCount(props.likesCount);
-        loadRecipes()
-    }, [props.liked, props.likesCount]);
-
+    // 👇 Убираем локальное состояние, теперь всё берём из store
     const handleLike = async () => {
-        if (!token) {
-            alert("Войдите, чтобы лайкать рецепты");
-            return;
-        }
-
+        const token = localStorage.getItem("token");
         try {
-            let count;
-            if (liked) {
-                count = await unlikeRecipe(props.id, token);
-                setLiked(false);
+            if (RecipeStore.isLiked(props.id)) {
+                await unlikeRecipe(props.id, token);
+                RecipeStore.removeLike(props.id);
             } else {
-                count = await likeRecipe(props.id, token);
-                setLiked(true);
+                await likeRecipe(props.id, token);
+                RecipeStore.addLike(props.id);
             }
-            setLikesCount(count);
-
-        } catch (error) {
-            console.error("Ошибка при лайке:", error);
+            // Обновляем глобальный список рецептов
+            await loadRecipes(token);
+        } catch (e) {
+            console.error(e);
         }
     };
 
@@ -135,7 +123,10 @@ const Recipe = () => {
                         <div className='flex flex-col items-center bg-white rounded-xl border border-gray-300 p-3'>
                             <HandHeart size={24} className='text-black'/>
                             <h4 className='font-medium mt-1'>likes</h4>
-                            <span className='text-gray-500 text-sm'>{likesCount}</span>
+                            {/* 👇 Теперь берём из store */}
+                            <span className='text-gray-500 text-sm'>
+                                {RecipeStore.getLikesCount(props.id)}
+                            </span>
                         </div>
                         <InfoCard icon={servingsBig} value={props.servings} label="Servings" />
                     </div>
@@ -169,9 +160,13 @@ const Recipe = () => {
                 </Card>
             </div>
 
-            <CommentSection id={props.id} handleLike={handleLike} liked={liked}/>
+            <CommentSection
+                id={props.id}
+                handleLike={handleLike}
+                liked={RecipeStore.isLiked(props.id)}
+            />
         </div>
     );
 };
 
-export default Recipe;
+export default observer(Recipe);
