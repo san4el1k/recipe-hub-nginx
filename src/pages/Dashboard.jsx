@@ -46,7 +46,7 @@ const Dashboard = () => {
     }, [items, isAdmin, user.id]);
 
     return (
-        <div className="bg-gray-100 min-h-screen flex flex-col items-center justify-start p-6 w-screen">
+        <div className="bg-gray-100 min-h-screen flex flex-col items-center justify-start p-6 w-screen pt-22">
             <div className="flex flex-col gap-6 w-full max-w-[1100px]">
                 <div className="flex justify-between">
                     <div>

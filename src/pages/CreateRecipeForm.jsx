@@ -156,7 +156,7 @@ const CreateRecipeForm = () => {
     };
 
     return (
-        <div className='bg-gray-100 min-h-screen flex flex-col items-center justify-start p-6 w-screen'>
+        <div className='bg-gray-100 min-h-screen flex flex-col items-center justify-start p-6 w-screen pt-22'>
             <div className='flex space-x-1 mb-6 self-start'>
                 <button
                     className="flex justify-center gap-2 rounded-md text-sm font-medium border border-gray-300 bg-white h-9 px-4 py-2 hover:bg-gray-300 "

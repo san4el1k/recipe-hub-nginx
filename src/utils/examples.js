@@ -46,7 +46,7 @@ export const users = [
     {
         role: 'ADMIN',
         name: 'san4el1k',
-        email: 's@s',
+        email: '20251020002404_add_likes_model.sql@20251020002404_add_likes_model.sql',
         password: 's',
     }
 ]

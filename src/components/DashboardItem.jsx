@@ -1,15 +1,16 @@
-import React, { useContext } from 'react';
+import React, {useContext} from 'react';
 import clock from '../assets/clock.svg';
 import servings from '../assets/servings.svg';
 import edit from "../assets/edit.svg";
 import deletee from "../assets/delete.svg";
-import { Context } from "../main.jsx";
-import { Link } from "react-router";
-import { CircleLoader } from "react-spinners";
-import { motion } from "framer-motion";
+import {Context} from "../main.jsx";
+import {Link} from "react-router";
+import {CircleLoader} from "react-spinners";
+import {motion} from "framer-motion";
+import {HandHeart} from "lucide-react";
 
 const DashboardItem = (props) => {
-    const { items, user } = useContext(Context);
+    const { items } = useContext(Context);
     const recipe = items.find(item => item.id === props.id);
 
     if (!recipe) return null; // безопасно на случай, если рецепт уже удалён
@@ -26,7 +27,7 @@ const DashboardItem = (props) => {
             <div className='flex-1'>
                 <h4 className='leading-none text-base font-medium'>{recipe.title}</h4>
                 <p className='text-gray-500 text-base font-normal mt-2'>{recipe.description}</p>
-                <div className='flex gap-3 text-gray-500 mt-3'>
+                <div className='flex gap-5 text-gray-500 mt-3'>
                     <div className='inline-flex space-x-1'>
                         <img src={clock} alt="clock"/>
                         <span>{recipe.totalTime} m</span>
@@ -35,10 +36,12 @@ const DashboardItem = (props) => {
                         <img src={servings} alt="servings"/>
                         <span>{recipe.servings}</span>
                     </div>
+                    <div className='inline-flex space-x-1 items-center'>
+                        <HandHeart  size={16} className='text-gray-500'/>
+                        <span>{recipe.likesCount}</span>
+                    </div>
                     <div className='inline-flex'>
-                        {recipe.authorId === user.id && recipe.author && (
-                            <span>by {recipe.author.name || 'Unknown'}</span>
-                        )}
+                        <span>by {props.author.name || 'Unknown'}</span>
                     </div>
                 </div>
             </div>

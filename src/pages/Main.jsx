@@ -4,6 +4,7 @@ import lupa from '../assets/lupa.svg'
 import {Context} from "../main.jsx";
 import {CircleLoader} from "react-spinners";
 import {useDocumentTitle} from "../hooks/documentTitleHook.jsx";
+import {AnimatePresence} from "framer-motion";
 
 const Main = () => {
     const {items, isFetching} = useContext(Context)
@@ -11,7 +12,7 @@ const Main = () => {
 
     useDocumentTitle('Discover | Recipe Hub')
 
-    const filteredItems = items
+    let filteredItems = items
         .filter(item =>
             item.title.toLowerCase().includes(value.toLowerCase()) ||
             item.description.toLowerCase().includes(value.toLowerCase())
@@ -19,7 +20,7 @@ const Main = () => {
         .sort((a, b) => b.id - a.id);
 
     return (
-        <div className='bg-gray-100 min-h-screen flex justify-center'>
+        <div className='bg-gray-100 min-h-screen flex justify-center pt-16'>
             <div className='m-6'>
                 <div className='flex flex-col items-center text-center'>
                     <h1 className='text-4xl '>Delicious Recipes</h1>
@@ -57,22 +58,26 @@ const Main = () => {
                                 </div>
                             ) : (
                                 <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full '>
-                                    {filteredItems.map(recipe => (
-                                        <Item
-                                            id={recipe.id}
-                                            key={recipe.id}
-                                            image={recipe.image}
-                                            title={recipe.title}
-                                            description={recipe.description}
-                                            totalTime={`${recipe.totalTime} m`}
-                                            servings={recipe.servings}
-                                            author={recipe.author}
-                                            prepTime={recipe.prepTime}
-                                            cookTime={recipe.cookTime}
-                                            ingredients={recipe.ingredients}
-                                            instructions={recipe.instructions}
-                                        />
-                                    ))}
+                                    <AnimatePresence>
+                                        {filteredItems.map(recipe => (
+                                            <Item
+                                                id={recipe.id}
+                                                key={recipe.id}
+                                                image={recipe.image}
+                                                title={recipe.title}
+                                                description={recipe.description}
+                                                totalTime={`${recipe.totalTime} m`}
+                                                servings={recipe.servings}
+                                                author={recipe.author}
+                                                prepTime={recipe.prepTime}
+                                                cookTime={recipe.cookTime}
+                                                ingredients={recipe.ingredients}
+                                                instructions={recipe.instructions}
+                                                likesCount={recipe.likesCount}
+                                                liked={recipe.liked}
+                                            />
+                                        ))}
+                                    </AnimatePresence>
                                 </div>
                             )}
                         </>

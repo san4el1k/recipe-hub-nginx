@@ -11,7 +11,7 @@ const Input = ( props ) => {
                 required={true}
                 type={props.type}
                 placeholder={props.placeholder}
-                className='pl-3 bg-gray-100 rounded-md mt-1 min-h-9 h-full w-full transition-[color,box-shadow] outline-none md:text-sm focus-visible:ring-[3px] focus-visible:ring-gray-300'
+                className='pl-3 bg-gray-100 rounded-md mt-1 min-h-9 h-auto w-full transition-[color,box-shadow] outline-none md:text-sm focus-visible:ring-[3px] focus-visible:ring-gray-300'
             />
         </div>
     );

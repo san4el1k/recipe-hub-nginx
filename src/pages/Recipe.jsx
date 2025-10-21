@@ -1,16 +1,20 @@
-import React, { useState } from 'react';
-import { useLocation, useNavigate } from "react-router";
+import React, {useContext, useEffect, useState} from 'react';
+import {useLocation, useNavigate} from "react-router";
 import arrow from '../assets/left-arrow.svg';
 import clockBig from '../assets/clockBig.svg';
 import servingsBig from '../assets/servingsBig.svg';
 import Ingredients from "../components/Ingredients.jsx";
 import Instructions from "../components/Instructions.jsx";
 import Carousel from "../components/Carousel.jsx";
-import { useDocumentTitle } from "../hooks/documentTitleHook.jsx";
+import {useDocumentTitle} from "../hooks/documentTitleHook.jsx";
+import CommentSection from "../components/commentSection/CommentSection.jsx";
+import {HandHeart} from "lucide-react";
+import {likeRecipe, unlikeRecipe} from "../utils/likesHelper.js";
+import {Context} from "../main.jsx";
 
 // Компонент для отображения информации (время, порции и т.д.)
 const InfoCard = ({ icon, value, label }) => (
-    <div className='flex flex-col items-center bg-white rounded-xl border border-gray-300 p-3 pl-6 pr-6'>
+    <div className='flex flex-col text-center items-center bg-white rounded-xl border border-gray-300 p-3 pl-6 pr-6'>
         <img src={icon} alt={label} />
         <h4 className='font-medium mt-1'>{value}</h4>
         <span className='text-gray-500 text-sm'>{label}</span>
@@ -26,7 +30,7 @@ const Lightbox = ({ image, onClose }) => (
         <img
             src={image}
             alt="full"
-            className="max-w-full max-h-full rounded-3xl cursor-pointer transition-all hover:scale-95"
+            className="max-w-full max-h-full rounded-3xl cursor-pointer transition-all top-16"
         />
     </div>
 );
@@ -57,10 +61,14 @@ const Card = ({ children }) => (
 );
 
 const Recipe = () => {
+    const { loadRecipes } = useContext(Context);
     const navigate = useNavigate();
     const location = useLocation();
     const { props } = location.state || {};
     const [lightbox, setLightbox] = useState(null);
+    const [liked, setLiked] = useState(props.liked);
+    const [likesCount, setLikesCount] = useState(props.likesCount);
+    const token = localStorage.getItem("token");
 
     if (!props) {
         return <p className="text-center mt-10">Recipe not found</p>;
@@ -68,8 +76,37 @@ const Recipe = () => {
 
     useDocumentTitle(`${props.title} | Recipe Hub`);
 
+    // 👇 синхронизация с приходящими пропсами
+    useEffect(() => {
+        setLiked(props.liked);
+        setLikesCount(props.likesCount);
+        loadRecipes()
+    }, [props.liked, props.likesCount]);
+
+    const handleLike = async () => {
+        if (!token) {
+            alert("Войдите, чтобы лайкать рецепты");
+            return;
+        }
+
+        try {
+            let count;
+            if (liked) {
+                count = await unlikeRecipe(props.id, token);
+                setLiked(false);
+            } else {
+                count = await likeRecipe(props.id, token);
+                setLiked(true);
+            }
+            setLikesCount(count);
+
+        } catch (error) {
+            console.error("Ошибка при лайке:", error);
+        }
+    };
+
     return (
-        <div className='bg-gray-100 min-h-screen flex flex-col'>
+        <div className='bg-gray-100 min-h-screen flex flex-col pt-16'>
             {/* Back Button */}
             <div className='flex space-x-1 p-6 mb-6'>
                 <button
@@ -93,8 +130,13 @@ const Recipe = () => {
                     <p className='mt-3 text-md text-gray-500 leading-none'>{props.description}</p>
                     <span className='mt-3 text-gray-500 text-sm'>by {props.author?.name || "Unknown"}</span>
 
-                    <div className='flex flex-row mt-6 justify-between w-full'>
+                    <div className='grid grid-cols-3 mt-6 gap-6 w-full'>
                         <InfoCard icon={clockBig} value={props.totalTime} label="Total Time" />
+                        <div className='flex flex-col items-center bg-white rounded-xl border border-gray-300 p-3'>
+                            <HandHeart size={24} className='text-black'/>
+                            <h4 className='font-medium mt-1'>likes</h4>
+                            <span className='text-gray-500 text-sm'>{likesCount}</span>
+                        </div>
                         <InfoCard icon={servingsBig} value={props.servings} label="Servings" />
                     </div>
 
@@ -126,6 +168,8 @@ const Recipe = () => {
                     </ol>
                 </Card>
             </div>
+
+            <CommentSection id={props.id} handleLike={handleLike} liked={liked}/>
         </div>
     );
 };

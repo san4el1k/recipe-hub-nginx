@@ -18,7 +18,7 @@ const NavBar = () => {
 
     const navLinks = [
         { path: "/", label: "Recipes", icon: recipesB, activeIcon: recipes, authRequired: false },
-        { path: "/dashboard", label: "Admin Dashboard", authRequired: true },
+        { path: "/dashboard", label: "Dashboard", authRequired: true },
         { path: "/create", label: "Add Recipe", icon: plus, activeIcon: plusW, authRequired: true },
     ];
 
@@ -88,7 +88,7 @@ const NavBar = () => {
     };
 
     return (
-        <nav className="bg-white border-b border-gray-200 px-4 py-3">
+        <nav className="bg-white/85 border-b border-gray-200 px-4 py-3 fixed top-0 left-0 right-0 z-50 shadow-sm transition-all duration-300 ease-in-out backdrop-blur-xs">
             <div className="flex items-center justify-between">
                 <div className="flex items-center">
                     <button onClick={() => navigate("/")} className="flex items-center h-9">
