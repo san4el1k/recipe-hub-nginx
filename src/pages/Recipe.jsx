@@ -96,7 +96,7 @@ const Recipe = () => {
     return (
         <div className='bg-gray-100 min-h-screen flex flex-col pt-16'>
             {/* Back Button */}
-            <div className='flex space-x-1 p-6 mb-6'>
+            <div className='flex space-x-1 pt-6 pl-3 sm:p-6 mb-6'>
                 <button
                     className="flex justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all border border-gray-300 bg-white h-9 px-4 py-2 items-center space-x-2 hover:bg-gray-300"
                     onClick={() => navigate('/')}
@@ -107,7 +107,7 @@ const Recipe = () => {
             </div>
 
             {/* Main Info Section */}
-            <div className='grid grid-cols-1 md:grid-cols-2 self-center gap-6 w-full md:max-w-[900px] lg:max-w-[1100px] p-6 pt-0'>
+            <div className='grid grid-cols-1 md:grid-cols-2 self-center gap-6 w-full md:max-w-[900px] lg:max-w-[1100px] p-3 sm:p-6 pt-0'>
                 <div className="flex flex-row-reverse max-h-[671px] max-w-full md:max-h-[450px] lg:max-h-[436px] overflow-visible">
                     <RecipeImage images={props.image} onClick={setLightbox} />
                     {lightbox && <Lightbox image={lightbox} onClose={() => setLightbox(null)} />}
@@ -140,7 +140,7 @@ const Recipe = () => {
             </div>
 
             {/* Ingredients & Instructions */}
-            <div className='grid grid-cols-1 md:grid-cols-2 self-center gap-6 w-full md:max-w-[900px] lg:max-w-[1100px] p-6 pt-0'>
+            <div className='grid grid-cols-1 md:grid-cols-2 self-center gap-6 w-full md:max-w-[900px] lg:max-w-[1100px] p-3 sm:p-6 pt-0'>
                 <Card>
                     <h3 className='mb-6 font-bold'>Ingredients</h3>
                     <ul className='space-y-2 flex flex-col'>

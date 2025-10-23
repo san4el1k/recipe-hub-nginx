@@ -64,8 +64,8 @@ const Auth = observer(() => {
     };
 
     return (
-        <div className="bg-gray-100 min-h-screen flex items-center justify-center p-6 pt-22">
-            <div className="border bg-white border-gray-300 flex flex-col gap-6 rounded-xl w-full max-w-md mx-auto items-start p-6">
+        <div className="bg-gray-100 min-h-screen flex items-center justify-center p-3 sm:p-6 pt-22">
+            <div className="border bg-white border-gray-300 flex flex-col gap-6 rounded-xl w-full max-w-md mx-auto items-start p-3 sm:p-6">
                 <div className="flex flex-col">
                     <h4 className="leading-none text-base font-medium">
                         {isLogin ? 'Sign In' : 'Sign Up'}

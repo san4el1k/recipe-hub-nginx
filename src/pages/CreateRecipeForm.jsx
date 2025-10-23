@@ -156,7 +156,7 @@ const CreateRecipeForm = () => {
     };
 
     return (
-        <div className='bg-gray-100 min-h-screen flex flex-col items-center justify-start p-6 w-screen pt-22'>
+        <div className='bg-gray-100 min-h-screen flex flex-col items-center justify-start p-3 sm:p-6 w-screen pt-22 sm:pt-22'>
             <div className='flex space-x-1 mb-6 self-start'>
                 <button
                     className="flex justify-center gap-2 rounded-md text-sm font-medium border border-gray-300 bg-white h-9 px-4 py-2 hover:bg-gray-300 "
@@ -168,7 +168,7 @@ const CreateRecipeForm = () => {
             </div>
 
             <form
-                className={`flex flex-col p-6 gap-6 bg-white border border-gray-300 rounded-2xl w-full md:w-[720px] lg:w-[980px] ${isSubmitting && 'opacity-50'}`}
+                className={`flex flex-col p-3 sm:p-6 gap-6 bg-white border border-gray-300 rounded-2xl w-full md:w-[720px] lg:w-[980px] ${isSubmitting && 'opacity-50'}`}
             >
                 {/* Заголовок */}
                 <div>

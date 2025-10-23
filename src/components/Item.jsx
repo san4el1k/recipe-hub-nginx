@@ -20,19 +20,19 @@ const Item = ( props ) => {
             <Link
                 state={{ props }}
                 to={'/recipe/' + props.id}
-                className='w-full max-w-[700px] md:max-w-[460px] lg:max-w-[350px] border border-gray-300 rounded-2xl bg-white cursor-pointer transition-all hover:shadow-lg hover:scale-105'
+                className='flex flex-col w-full max-w-[700px] md:max-w-[460px] lg:max-w-[350px] border border-gray-300 rounded-2xl bg-white cursor-pointer transition-all hover:shadow-lg hover:scale-105'
             >
-                <div className='relative h-full flex max-h-[393px] lg:max-h-[200px] md:max-h-[256px]'>
+                <div className='relative flex max-h-[393px] lg:max-h-[200px] md:max-h-[256px]'>
                     {!loaded && <div className="absolute inset-0 bg-gray-300 animate-pulse rounded-t-2xl"></div>}
                     <img
                         src={props.image[0]}
                         alt={props.title}
                         onLoad={() => setLoaded(true)}
-                        className={`rounded-t-2xl rounded-tr-2xl object-cover object-center transition-opacity duration-500 ${loaded ? 'opacity-100' : 'opacity-0'}`}
+                        className={`w-full h-full rounded-t-2xl rounded-tr-2xl object-cover transition-opacity duration-500 ${loaded ? 'opacity-100' : 'opacity-0'}`}
                     />
                 </div>
 
-                <div className='flex flex-col p-6 h-[192px] justify-between'>
+                <div className='flex flex-col p-6 min-h-[192px] justify-between'>
                     <div>
                         <h4 className='leading-none text-base'>{props.title}</h4>
                         <p className='mt-3 text-gray-400 line-clamp-2'>{props.description}</p>

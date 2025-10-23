@@ -21,7 +21,7 @@ const Main = () => {
 
     return (
         <div className='bg-gray-100 min-h-screen flex justify-center pt-16'>
-            <div className='m-6'>
+            <div className='sm:m-6 m-3'>
                 <div className='flex flex-col items-center text-center'>
                     <h1 className='text-4xl '>Delicious Recipes</h1>
                     <h2 className='text-xl text-gray-400 mt-2'>Discover amazing recipes from our community</h2>

@@ -65,7 +65,7 @@ const CommentSection = ({ id, handleLike, liked }) => {
     }, []);
 
     return (
-        <div className="w-full lg:max-w-[1100px] md:max-w-[900px] flex flex-col gap-4 p-6 pt-0 self-center">
+        <div className="w-full lg:max-w-[1100px] md:max-w-[900px] flex flex-col gap-4 p-3 sm:p-6 pt-0 self-center">
             <div className="flex flex-col bg-white rounded-xl p-6 border border-gray-300 w-full">
                 <div className="flex justify-between items-center">
                     <h4 className='text-lg font-bold'>Comments</h4>
@@ -82,11 +82,6 @@ const CommentSection = ({ id, handleLike, liked }) => {
                     <div className='flex flex-col gap-2'>
                         <div className='flex items-center gap-2'>
                             <div className='flex gap-2 w-full'>
-                                <img
-                                    src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
-                                    alt="avatar"
-                                    className='w-10 h-10 rounded-full self-start'
-                                />
                                 <textarea
                                     ref={textareaRef} // добавляем ref
                                     value={commentValue}

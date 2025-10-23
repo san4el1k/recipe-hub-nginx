@@ -46,7 +46,7 @@ const Dashboard = () => {
     }, [items, isAdmin, user.id]);
 
     return (
-        <div className="bg-gray-100 min-h-screen flex flex-col items-center justify-start p-6 w-screen pt-22">
+        <div className="bg-gray-100 min-h-screen flex flex-col items-center justify-start p-3 sm:p-6 w-screen pt-22 sm:pt-22">
             <div className="flex flex-col gap-6 w-full max-w-[1100px]">
                 <div className="flex justify-between">
                     <div>
@@ -63,7 +63,7 @@ const Dashboard = () => {
                     </button>
                 </div>
 
-                <div className="bg-white border border-gray-300 rounded-2xl p-6">
+                <div className="bg-white border border-gray-300 rounded-2xl p-3 sm:p-6">
                     <div>
                         <h4 className="leading-none text-base font-medium">Your Recipes</h4>
                         <p className="text-gray-500 text-base font-normal pt-1">
