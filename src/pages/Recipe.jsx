@@ -31,7 +31,7 @@ const Recipe = () => {
             try {
                 setLoading(true);
                 const token = localStorage.getItem("token");
-                const response = await axios.get(`/https://recipehub.online/api/recipes/${id}`, {
+                const response = await axios.get(`https://recipehub.online/api/recipes/${id}`, {
                     headers: token ? { Authorization: `Bearer ${token}` } : {}
                 });
                 setRecipe(response.data);
@@ -50,6 +50,8 @@ const Recipe = () => {
         fetchRecipe();
     }, [id]);
 
+    useDocumentTitle(recipe ? `${recipe.title} | Recipe Hub` : "Recipe Hub");
+
     if (loading) {
         return <p className="text-center mt-10">Loading...</p>;
     }
@@ -57,8 +59,6 @@ const Recipe = () => {
     if (!recipe) {
         return <p className="text-center mt-10">Recipe not found</p>;
     }
-
-    useDocumentTitle(`${recipe.title} | Recipe Hub`);
 
     const handleLike = async () => {
         const token = localStorage.getItem("token");
@@ -74,7 +74,7 @@ const Recipe = () => {
             await loadRecipes(token);
             
             // Обновляем текущий рецепт
-            const response = await axios.get(`/https://recipehub.online/api/recipes/${id}`, {
+            const response = await axios.get(`https://recipehub.online/api/recipes/${id}`, {
                 headers: token ? { Authorization: `Bearer ${token}` } : {}
             });
             setRecipe(response.data);
